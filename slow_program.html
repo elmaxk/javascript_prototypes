@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<p><span id="one"/></p>
+<p><span id="two"/></p>
+
+<script>
+    function time(name, action) {
+        let start = Date.now(); //Current time in ms
+        action();
+        console.log(name, "took", Date.now() - start, "ms");
+    }
+
+    time("naive", () => {
+        let target = document.getElementById("one");
+        while (target.offsetWidth < 2000) {
+            target.appendChild(document.createTextNode("X"));
+        }
+    });
+
+    time("clever", function () {
+        let target = document.getElementById("two");
+        target.appendChild(document.createTextNode("XXXX"));
+        let total = Math.ceil(2000 / (target.offsetWidth / 5));
+        target.firstChild.nodeValue = "X".repeat(total);
+    });
+</script>
+
+<body>
+
+</body>
+</html>
